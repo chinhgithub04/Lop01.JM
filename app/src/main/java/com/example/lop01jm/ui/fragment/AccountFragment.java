@@ -33,19 +33,11 @@ public class AccountFragment extends Fragment {
 
         nameTextView = view.findViewById(R.id.name);
         emailTextView = view.findViewById(R.id.email);
-        auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
-        loadUserInfo();
-
-        Button logout = view.findViewById(R.id.logout);
-        RelativeLayout order, yourprofile, shipaddress, paymethod, point, about;
-        order = view.findViewById(R.id.order);
+        RelativeLayout yourprofile, paymethod;
         yourprofile = view.findViewById(R.id.myprofile);
-        shipaddress = view.findViewById(R.id.shipaddress);
         paymethod = view.findViewById(R.id.paymethod);
-        point = view.findViewById(R.id.point);
-        about = view.findViewById(R.id.about);
 
 
 
@@ -66,18 +58,5 @@ public class AccountFragment extends Fragment {
         return view;
     }
 
-    private void loadUserInfo() {
-        String userId = auth.getCurrentUser().getUid();
-        db.collection("users").document(userId).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
-                    String name = document.getString("name");
-                    String email = document.getString("email");
-                    nameTextView.setText(name);
-                    emailTextView.setText(email);
-                }
-            }
-        });
-    }
+
 }
