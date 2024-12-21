@@ -9,12 +9,14 @@ public class User {
     private String name;
     private String phoneNumber;
     private Date DoB;
+    private List<PaymentMethod> paymentMethods = new ArrayList<>();
 
-    public User(String email, String name, String phoneNumber, Date doB) {
+    public User(String email, String name, String phoneNumber, Date doB, List<PaymentMethod> paymentMethods) {
         this.email = email;
         this.name = name;
         this.phoneNumber = phoneNumber;
         DoB = doB;
+        this.paymentMethods = paymentMethods;
     }
 
     public User() {
@@ -50,5 +52,13 @@ public class User {
 
     public void setDoB(Date doB) {
         DoB = doB;
+    }
+
+    public List<PaymentMethod> getPaymentMethods() {
+        return paymentMethods;
+    }
+
+    public void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+        this.paymentMethods = paymentMethods;
     }
 }

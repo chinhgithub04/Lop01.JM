@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lop01jm.R;
 import com.example.lop01jm.data.model.PaymentMethod;
 import com.example.lop01jm.ui.adapter.PaymentMethodAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -22,7 +21,6 @@ import java.util.List;
 public class PaymentMethodActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
-    private FirebaseAuth auth;
     private PaymentMethodAdapter adapter;
     private List<PaymentMethod> paymentMethods;
 
@@ -32,7 +30,6 @@ public class PaymentMethodActivity extends AppCompatActivity {
         setContentView(R.layout.payment_methods);
 
         db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
         paymentMethods = new ArrayList<>();
         adapter = new PaymentMethodAdapter(this, paymentMethods);
 
@@ -53,11 +50,10 @@ public class PaymentMethodActivity extends AppCompatActivity {
     }
 
     private void loadPaymentMethods() {
-        String userId = auth.getCurrentUser().getUid();
+        String userId = "user1";
         db.collection("users").document(userId).collection("paymentMethods")
                 .addSnapshotListener((queryDocumentSnapshots, e) -> {
                     if (e != null) {
-                        // Handle the error
                         return;
                     }
                     paymentMethods.clear();

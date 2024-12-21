@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lop01jm.R;
 import com.example.lop01jm.data.model.PaymentMethod;
 import com.example.lop01jm.ui.activity.NewPaymentMethodActivity;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
@@ -25,13 +24,11 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
     private List<PaymentMethod> paymentMethodList;
     private Context context;
     private FirebaseFirestore db;
-    private FirebaseAuth auth;
 
     public PaymentMethodAdapter(Context context, List<PaymentMethod> paymentMethodList) {
         this.context = context;
         this.paymentMethodList = paymentMethodList;
         this.db = FirebaseFirestore.getInstance();
-        this.auth = FirebaseAuth.getInstance();
     }
 
     @NonNull
@@ -56,7 +53,7 @@ public class PaymentMethodAdapter extends RecyclerView.Adapter<PaymentMethodAdap
         });
 
         holder.btnDelete.setOnClickListener(v -> {
-            String userId = auth.getCurrentUser().getUid();
+            String userId = "user1";
             db.collection("users").document(userId).collection("paymentMethods").document(paymentMethod.getId()).delete()
                     .addOnSuccessListener(aVoid -> {
                     })
