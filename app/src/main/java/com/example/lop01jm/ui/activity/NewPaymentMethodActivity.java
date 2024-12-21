@@ -9,13 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.lop01jm.R;
 import com.example.lop01jm.data.model.PaymentMethod;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class NewPaymentMethodActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
-    private FirebaseAuth auth;
     private EditText edtName, edtNumber, edtDate, edtCVV;
     private String paymentMethodId;
 
@@ -25,7 +23,6 @@ public class NewPaymentMethodActivity extends AppCompatActivity {
         setContentView(R.layout.new_payment_methods);
 
         db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
 
         edtName = findViewById(R.id.edtName);
         edtNumber = findViewById(R.id.edtNumber);
@@ -46,7 +43,7 @@ public class NewPaymentMethodActivity extends AppCompatActivity {
     }
 
     private void loadPaymentMethod(String id) {
-        String userId = auth.getCurrentUser().getUid();
+        String userId = "user1";
         db.collection("users").document(userId).collection("paymentMethods").document(id).get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
@@ -74,7 +71,7 @@ public class NewPaymentMethodActivity extends AppCompatActivity {
         }
 
         PaymentMethod newPaymentMethod = new PaymentMethod(paymentMethodId, name, number, expiryDate, logoResId, cvv);
-        String userId = auth.getCurrentUser().getUid();
+        String userId = "user1";
 
         if (paymentMethodId != null) {
             db.collection("users").document(userId).collection("paymentMethods").document(paymentMethodId).set(newPaymentMethod)
